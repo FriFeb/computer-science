@@ -98,6 +98,8 @@ class LinkedList {
   shift() {
     if (!this._head) return;
 
+    if (this._tail === this._head) this._tail = null;
+
     this._head = this._head.next;
   }
 
@@ -221,11 +223,3 @@ class LinkedList {
     return string + ' null';
   }
 }
-
-const myFirstLinkedList = new LinkedList(1);
-
-myFirstLinkedList.append(2);
-myFirstLinkedList.append(3);
-myFirstLinkedList.append(4);
-myFirstLinkedList.append(5);
-debugger;
