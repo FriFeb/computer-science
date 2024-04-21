@@ -1,4 +1,4 @@
-import Bucket from './hash-map-bucket.mjs';
+import Bucket from './hash-set-bucket.mjs';
 
 function createBlankBuckets(capacity) {
   return Array.from({ length: capacity }, (cur) => {
@@ -6,7 +6,7 @@ function createBlankBuckets(capacity) {
   });
 }
 
-export default class HashMap {
+export default class HashSet {
   constructor(capacity = 16) {
     this._capacity = capacity;
     this._targetLoadFactor = 0.8;
@@ -56,10 +56,10 @@ export default class HashMap {
     this._recalculateIndexes(entries);
   }
 
-  set(key, value) {
+  set(key) {
     const { index, hashCode } = this._getInputInfo(key);
 
-    this._buckets[index].add(key, value, hashCode);
+    this._buckets[index].add(key, hashCode);
 
     if (this._getCurrentLoadFactor() >= this._targetLoadFactor) {
       this._doubleArrayCapacity();
@@ -69,9 +69,7 @@ export default class HashMap {
   get(key) {
     const { index } = this._getInputInfo(key);
 
-    const value = this._buckets[index].find(key)?.value;
-
-    return value ? value : null;
+    return this._buckets[index].find(key);
   }
 
   has(key) {
@@ -100,24 +98,6 @@ export default class HashMap {
     }, []);
 
     return bucketKeys.flat();
-  }
-
-  values() {
-    const bucketValues = this._buckets.reduce((acc, cur) => {
-      acc.push(cur.getValues());
-      return acc;
-    }, []);
-
-    return bucketValues.flat();
-  }
-
-  entries() {
-    const bucketEntries = this._buckets.reduce((acc, cur) => {
-      acc.push(cur.getEntries());
-      return acc;
-    }, []);
-
-    return bucketEntries.flat();
   }
 
   clear() {
