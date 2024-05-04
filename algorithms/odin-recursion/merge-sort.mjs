@@ -30,7 +30,7 @@ function mergeArrays(arr1, arr2) {
  * @param {array} array input array
  * @returns {array} sorted array
  */
-function mergeSort(array) {
+export default function mergeSort(array) {
   // An array is already sorted if there is only 1 element
   if (array.length == 1) return array;
 
@@ -44,5 +44,3 @@ function mergeSort(array) {
 
   return mergeArrays(sortedLeftArrPart, sortedRightArrPart);
 }
-
-console.log(mergeSort([9, 4, 0, 3, 2, 1, 6, 8, 7, 5, 10, 11]));
